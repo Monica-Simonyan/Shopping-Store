@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Placed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Thank You for Your Order!</h1>
+
+        <p>Your order has been successfully placed.</p>
+        <p><strong>Order ID:</strong> {{ order_id }}</p>
+
+        <p>We will notify you when your items are shipped.</p>
+
+        <div class="link">
+            <a href="{{ url_for('home') }}">Back to Shop</a>
+        </div>
+    </div>
+</body>
+
+</html>

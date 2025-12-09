@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Online Shop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Welcome to Our Online Shop</h1>
+            <p>Browse our products and find what you love!</p>
+           
+            <!-- Navigation -->
+            <nav>
+                <a href="{{ url_for('view_cart') }}">View Cart</a>
+                {% if session.get("customer_id") %}
+                <span style="margin-left: 10px; font-weight: bold;">Logged in</span>
+                <a href="{{ url_for('logout') }}" style="margin-left: 10px;">Logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" style="margin-left: 10px;">Login</a>
+                <a href="{{ url_for('register') }}" style="margin-left: 10px;">Register</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="category-filter">
+            <form method="GET" action="{{ url_for('home') }}">
+                <button type="submit" name="category" value="" class="{{ 'active' if not selected_category else '' }}">
+                    All
+                </button>
+                {% for cat in categories %}
+                <button type="submit" name="category" value="{{ cat[0] }}"
+                    class="{{ 'active' if selected_category == cat[0] else '' }}">
+                    {{ cat[1] }}
+                </button>
+                {% endfor %}
+            </form>
+        </div>
+        <div class="products-container">
+            {% for product in products %}
+        <div class="product-card">
+            <h2>{{ product[1] }}</h2>
+            <p><strong>Description:</strong> {{ product[2] }}</p>
+            <p><strong>Price:</strong> ${{ product[3] }}</p>
+            <p><strong>In Stock:</strong> {{ product[4] }}</p>
+            <p><strong>Supplier:</strong> {{ product[5] }}</p>
+        
+            <form action="{{ url_for('add_product_to_cart', product_id=product[0]) }}" method="POST">
+                <label for="quantity_{{ product[0] }}">Quantity:</label>
+                <input type="number" id="quantity_{{ product[0] }}" name="quantity" value="1" min="1" max="{{ product[4] }}">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Online Shop. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

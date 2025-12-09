@@ -1,0 +1,10 @@
+# Ignore configuration file with credentials
+config.py
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
